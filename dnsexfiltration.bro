@@ -1,5 +1,3 @@
-# Jason Wild CISS 469
-# Zeek/Bro Script Project
 # DNS exfiltration script
 
 @load base/protocols/dns
@@ -7,12 +5,14 @@
 
 module DNS;
 
+# Creates the Exviltration Notice type
 export  {
     redef enum Notice::Type += {
         Exfiltration,
     };
 }
 
+# if domain exceeds a length of 52, generates a notice that includes the domain string and IP
 event dns_request(c: connection, msg: dns_msg, query: string, qtype: count, qclass: count)
 {
     if (|query| > 52)
